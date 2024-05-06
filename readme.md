@@ -1,4 +1,4 @@
-# Tomegotchi - Kotlin App
+# ST10447515 Tomegotchi - Kotlin App
 Welcome to the Tomegotchi app! This is a simple virtual pet application developed with Kotlin. Users can feed, play with, and take care of their Tomegotchi, making sure it stays healthy and happy.
 
 ## Features
