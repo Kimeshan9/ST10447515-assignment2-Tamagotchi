@@ -1,0 +1,50 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17' 
+
+    - name: Set up Gradle cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Run Tests
+      run: ./gradlew test
+
+    - name: Run Instrumented Tests
+      run: ./gradlew connectedAndroidTest
+
+    - name: Upload Build Artifacts
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-logs
+        path: build/reports
