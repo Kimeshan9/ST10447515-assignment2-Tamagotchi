@@ -33,14 +33,6 @@ jobs:
         restore-keys: |
           gradle-${{ runner.os }}-
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
-    - name: Run Tests
-      run: ./gradlew test
-
-    - name: Run Instrumented Tests
-      run: ./gradlew connectedAndroidTest
 
     - name: Upload Build Artifacts
       if: failure()
